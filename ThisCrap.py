@@ -12,7 +12,8 @@ def create():
 
 def roll_dice():
     roll = rand.randint(1, 6)
-    return roll
+    roll2 = rand.randint(1, 6)
+    return roll + roll2
 
 
 def play_game():
@@ -20,7 +21,7 @@ def play_game():
     input()
     bankroll = create()
     while bankroll > 0:
-        print("place your bet")
+        print("Place your bet")
         bet = int(input())
         while 0 < bet <= bankroll:
             bankroll = bankroll - bet
@@ -37,14 +38,15 @@ def play_game():
                 print("press enter to roll again")
                 input()
                 roll2 = 0
-                while roll2 != roll or roll2 != 7:
+                while roll2 != roll and roll2 != 7:
                     roll2 = roll_dice()
-
+                    print(roll2)
                 if roll2 == roll:
                     print(f"Congratulations you won by rolling a {roll} again!")
                     bet = bet * 2
                     bankroll = bet + bankroll
                 else:
                     print("Sorry you lost, you rolled a 7")
+
 
 play_game()
