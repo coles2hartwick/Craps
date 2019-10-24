@@ -6,7 +6,12 @@ import sys
 
 
 def create():
-    bankroll = int(input("What is your bankroll?"))
+    bankroll = 0
+    while bankroll == 0:
+        bankroll = int(input("What is your bankroll?\n>"))
+        if bankroll < 0:
+            print("Im sorry that is not a valid bankroll please choose something over $0")
+            bankroll = 0
     return bankroll
 
 
@@ -22,31 +27,51 @@ def play_game():
     bankroll = create()
     while bankroll > 0:
         print("Place your bet")
-        bet = int(input())
-        while 0 < bet <= bankroll:
-            bankroll = bankroll - bet
-            roll = roll_dice()
-            if roll == 7 or roll == 11:
-                print(f"Congratulations you rolled a {roll} you win")
-                bet = bet * 2
-                bankroll = bet + bankroll
-            elif roll == 2 or roll == 3 or roll == 12:
-                print(f"Sorry we you rolled a {roll} you lost")
-                print(f"You lost {bet} dollars")
-            else:
-                print(f"You rolled a {roll} you need to roll that to win if you roll a 7 you will lose")
-                print("press enter to roll again")
-                input()
-                roll2 = 0
-                while roll2 != roll and roll2 != 7:
-                    roll2 = roll_dice()
-                    print(roll2)
-                if roll2 == roll:
-                    print(f"Congratulations you won by rolling a {roll} again!")
+        bet = int(input(">"))
+        if bet < 0 or bet > bankroll:
+            print("Im sorry that bet is not valid please choose something greater than 0")
+            print(f"and less than or equal to {bankroll}")
+        else:
+            while 0 < bet <= bankroll:
+                bankroll = bankroll - bet
+                roll = roll_dice()
+                if roll == 7 or roll == 11:
+                    print(f"Congratulations you rolled a {roll} you win")
                     bet = bet * 2
                     bankroll = bet + bankroll
+                    print(f"Your bankroll is now {bankroll} dollars")
+                    bet = 0
+                elif roll == 2 or roll == 3 or roll == 12:
+                    print(f"Sorry you rolled a {roll} you lost")
+                    print(f"You lost {bet} dollars")
+                    print(f"Your bankroll is now {bankroll}")
+                    bet = 0
                 else:
-                    print("Sorry you lost, you rolled a 7")
+                    print(f"You rolled a {roll} you need to roll that again to win or if you roll a 7 you will lose, good luck!")
+                    print("press enter to roll again")
+                    input()
+                    roll2 = 0
+                    while roll2 != roll and roll2 != 7:
+                        roll2 = roll_dice()
+                        print(roll2)
+                    if roll2 == roll:
+                        print(f"Congratulations you won by rolling a {roll} again!")
+                        bet = bet * 2
+                        bankroll = bet + bankroll
+                        print(f"Your bankroll is {bankroll} dollars")
+                        bet = 0
+                    else:
+                        print("Sorry you lost, you rolled a 7")
+                        print(f"You lost {bet} dollars and your bankroll is {bankroll}")
+                        bet = 0
+                print("Would you like to play again? Y or N")
+                answer = input(">")
+                if answer == "N" or answer == "n":
+                    print(f"Thanks for the game here's your'e {bankroll} dollars back have a nice day!")
+                    sys.exit()
+                elif bankroll == 0:
+                    print("I'm sorry your bankroll is 0 you lost all your money have a good day!")
+                    sys.exit()
 
 
 play_game()
