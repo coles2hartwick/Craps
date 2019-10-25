@@ -25,17 +25,17 @@ def play_game():
     print("Press enter to play craps")
     input()
     bankroll = create()
-    while bankroll > 0:
+    while bankroll > 0:  # makes sure that the bankroll is valid so the player can play
         print("Place your bet")
         bet = int(input(">"))
-        if bet < 0 or bet > bankroll:
+        if bet < 0 or bet > bankroll:  # makes sure that the bet is a valid number
             print("Im sorry that bet is not valid please choose something greater than 0")
             print(f"and less than or equal to {bankroll}")
         else:
-            while 0 < bet <= bankroll:
+            while 0 < bet <= bankroll:  # applies the bet to bankroll
                 bankroll = bankroll - bet
                 roll = roll_dice()
-                if roll == 7 or roll == 11:
+                if roll == 7 or roll == 11:  # determines the value of the roll and whether or not the person wins loses or keeps rolling
                     print(f"Congratulations you rolled a {roll} you win")
                     bet = bet * 2
                     bankroll = bet + bankroll
@@ -51,7 +51,7 @@ def play_game():
                     print("press enter to roll again")
                     input()
                     roll2 = 0
-                    while roll2 != roll and roll2 != 7:
+                    while roll2 != roll and roll2 != 7:  # Keeps rolling to see if you win or lose
                         roll2 = roll_dice()
                         print(roll2)
                     if roll2 == roll:
@@ -66,7 +66,7 @@ def play_game():
                         bet = 0
                 print("Would you like to play again? Y or N")
                 answer = input(">")
-                if answer == "N" or answer == "n":
+                if answer == "N" or answer == "n":  # checks if you would want to play again and if you don"t kicks you from the program and gives your bankroll back
                     print(f"Thanks for the game here's your'e {bankroll} dollars back have a nice day!")
                     sys.exit()
                 elif bankroll == 0:
